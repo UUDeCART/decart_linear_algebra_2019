@@ -14,29 +14,35 @@ def plot_lines(*eqs, solvefor='y'):
 
 def create_vd(v):
     if isinstance(v[0], collections.Sequence):
-        return (v[0][0], v[0][1], v[1][0], v[1][1])
+        if len(v) > 2:
+            return (v[0][0], v[0][1], v[1][0], v[1][1])
+        else:
+            return (0,0,v[0][0],v[0][1])
     else:
-        return (0,0,v[0],v[1])
+        return (0,0,v[0], v[1])
 def extract_color(v):
-    if isinstance(v[0], np.ndarray):
-        return v[1]
-    else:
-        return v[2]
+
+    return v[-1]
+    #if isinstance(v[0], collections.Sequence):
+    #    return v[1]
+    #else:
+    #    return v[2]
 
 def draw_vectors(*v, ax=None):
 
+
     vs = [create_vd(vv) for vv in v]
+
     soa =np.array(vs)
-    X, Y, U, V = zip(*soa)
     if ax == None:
         plt.figure()
         ax = plt.gca()
 
-    maxx = np.abs(soa.max())
-
+    maxx = max([abs(vvv) for vv in vs for vvv in vv])
 
     colors = [extract_color(vv) for vv in v]
-    ax.quiver(X, Y, U, V, color = colors, angles='uv', scale_units='xy', scale=1)
+    for vv,c in zip(vs, colors):
+        ax.arrow(*vv, color = c, head_width=0.1*maxx, head_length=0.1*maxx)
 
     ax.set_xlim([-1.2*maxx, 1.2*maxx])
     ax.set_ylim([-1.2*maxx, 1.2*maxx])
