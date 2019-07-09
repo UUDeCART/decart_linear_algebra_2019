@@ -1,3 +1,4 @@
+import math
 
 def vec_eq(v1, v2):
     """
@@ -56,3 +57,8 @@ def print_vector(v):
         print("|",
               ("%5.2f"%row).ljust(7),
              "|")
+def norm(v):
+    result = 0
+    for i in v:
+        result += i*i
+    return math.sqrt(result)
