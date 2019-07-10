@@ -1,4 +1,7 @@
 import math
+import numpy as np
+from numpy.linalg import norm
+
 def vec_eq(v1, v2):
     """
     checks whether two vectors are equal
@@ -7,11 +10,7 @@ def vec_eq(v1, v2):
     v2:
     returns boolean
     """
-    assert len(v1) == len(v2)
-    for i in range(len(v1)):
-        if v1[i] != v2[i]:
-            return False
-    return True
+    return np.allclose(v1,v2)
 
 
 def alpha_x_v(alpha, v):
@@ -20,7 +19,7 @@ def alpha_x_v(alpha, v):
 
     returns vector
     """
-    return [alpha*r for r in v]
+    return alpha*v
 
 def v_plus_v(v1, v2):
     """
@@ -28,8 +27,7 @@ def v_plus_v(v1, v2):
 
     returns vector
     """
-    assert len(v1) == len(v2)
-    return [v1[i]+v2[i] for i in range(len(v1))]
+    return v1+v2
 
 
 def dot(v1,v2):
@@ -38,38 +36,26 @@ def dot(v1,v2):
 
     returns scalar
     """
+    return np.inner(v1,v2)
 
-    assert len(v1) == len(v2)
-    rslt = 0.0
-    for i in range(len(v1)):
-        rslt = rslt + v1[i]*v2[i]
-    return rslt
 
 def zero(n):
     """
     returns a zero vector of dimension n
     """
-    return [0.0 for i in range(n)]
+    return np.zeros(n)
 
 def print_vector(v):
     for row in v:                     
         print("|",
               ("%5.2f"%row).ljust(7),
              "|")
-
-
-def norm(v):
-    result = 0
-    for i in v:
-        result += i*i
-    return math.sqrt(result)
-
-  
         
+#def norm(v):
+#    return 
 def cos_sim(v1, v2):
     """
     computes the cosine similarity between two vectors v1 and v2
     Requires a dot product function and a norm function
     """
     return dot(v1,v2) / (norm(v1)*norm(v2))
-
