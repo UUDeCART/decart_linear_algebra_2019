@@ -1,4 +1,5 @@
 import math
+
 def vec_eq(v1, v2):
     """
     checks whether two vectors are equal
@@ -56,15 +57,8 @@ def print_vector(v):
         print("|",
               ("%5.2f"%row).ljust(7),
              "|")
-        
 def norm(v):
-    rslt = 0.0
-    for row in v:
-        rslt += row*row
-    return math.sqrt(rslt)
-def cos_sim(v1, v2):
-    """
-    computes the cosine similarity between two vectors v1 and v2
-    Requires a dot product function and a norm function
-    """
-    return dot(v1,v2) / (norm(v1)*norm(v2))
+    result = 0
+    for i in v:
+        result += i*i
+    return math.sqrt(result)
